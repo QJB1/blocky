@@ -9,27 +9,51 @@ public class BlockyGame {
     private Board board;
     private Piece activePiece;
     private Direction movement;
-    
     private int lockCounter;
+
+    private PieceKind[] piece_order;
+    private int curr_order;
     
     public BlockyGame() {
         board = new Board();
         movement = Direction.NONE;
         lockCounter = 0;
+
+        curr_order = 0;
+        piece_order = PieceKind.ALL.clone(); 
+        shuffle();
         trySpawnBlock();
     }
     
     private void trySpawnBlock() {
-        if (activePiece == null) {
-            activePiece = new Piece(PieceKind.I, new Position(Constants.BOARD_HEIGHT - 1, Constants.BOARD_WIDTH / 2 - 2));
+        if (activePiece == null) { 
+            activePiece = new Piece(getNextPiece(), new Position(Constants.BOARD_HEIGHT - 1, Constants.BOARD_WIDTH / 2 - 2));
             if (board.collides(activePiece)) {
                 System.exit(0);
             }
         }
     }
-    
+
+    private void shuffle() {
+        for (int i = piece_order.length - 1; i > 0; i--) {
+            int j = (int) (Math.random() * (i + 1)); // rand num: 0 <= j <= i
+            PieceKind temp = piece_order[i];
+            piece_order[i] = piece_order[j];
+            piece_order[j] = temp;
+        } 
+    }
+
+    private PieceKind getNextPiece() {
+        if (curr_order >= piece_order.length) {
+            shuffle();
+            curr_order = 0;
+        }
+        return piece_order[curr_order++];
+    }
+
     private void processMovement() {
         Position nextPos;
+        System.out.println(movement);
         switch(movement) {
         case NONE:
             nextPos = activePiece.getPosition();
@@ -39,6 +63,7 @@ public class BlockyGame {
             break;
         case RIGHT:
             nextPos = activePiece.getPosition().add(0, 1);
+            break; // 2. this line was missing before, causing RIGHT to not work
         default:
             throw new IllegalStateException("Unrecognized direction: " + movement.name());
         }
@@ -78,6 +103,7 @@ public class BlockyGame {
     }
     
     public Piece getActivePiece() { return activePiece; }
-    public void setDirection(Direction movement) { this.movement = movement; }
+    // it was missing processMovement(); causing the L and R key inputs to not register
+    public void setDirection(Direction movement) { this.movement = movement; processMovement(); } 
     public void rotatePiece(boolean dir) { activePiece.rotate(dir); }
 }

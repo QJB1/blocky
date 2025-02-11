@@ -12,4 +12,19 @@
     <maven.compiler.target>21</maven.compiler.target>
     <exec.mainClass>com.gamewerks.blocky.Blocky</exec.mainClass>
   </properties>
+  <!-- ✅ Add this build section here -->
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <plugins>
+      <!-- This allows running the project with `mvn exec:java` -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <mainClass>${exec.mainClass}</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
