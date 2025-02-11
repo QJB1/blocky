@@ -53,7 +53,6 @@ public class BlockyGame {
 
     private void processMovement() {
         Position nextPos;
-        System.out.println(movement);
         switch(movement) {
         case NONE:
             nextPos = activePiece.getPosition();
