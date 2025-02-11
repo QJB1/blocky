@@ -31,10 +31,8 @@ public class Blocky {
                 int code = e.getKeyCode();
                 if (code == e.VK_LEFT) {
                     game.setDirection(Direction.LEFT); // setDirection() was not working, it's fixed now 
-                    System.out.println("L");
                 } else if (code == e.VK_RIGHT) {
                     game.setDirection(Direction.RIGHT);
-                    System.out.println("R");
                 }
             }
             
@@ -43,11 +41,9 @@ public class Blocky {
                 if (code == e.VK_LEFT || code == e.VK_RIGHT) {
                     game.setDirection(Direction.NONE);
                 } else if (code == e.VK_Z) {
-                    System.out.println("Z");
                     game.rotatePiece(false);
                 } else if (code == e.VK_X) {
                     game.rotatePiece(true);
-                    System.out.println("X");
                 }
             }
         });
