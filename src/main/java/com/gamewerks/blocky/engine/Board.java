@@ -53,13 +53,15 @@ public class Board {
     }
     
     public void deleteRow(int n) {
-        for (int row = 0; row < n - 1; row++) {
+        // loop from 0 to n-1 did not do anything, we want rows above to fall down after deletion 
+        for (int row = n; row < well.length - 1; row++) { 
             for (int col = 0; col < Constants.BOARD_WIDTH; col++) {
                 well[row][col] = well[row+1][col];
             }
         }
+        // clears top row, which should all be empty
         for (int col = 0; col < Constants.BOARD_WIDTH; col++) {
-            well[n][col] = false;
+            well[well.length - 1][col] = false;       // it was well[n][col] = false;
         }
     }
     
