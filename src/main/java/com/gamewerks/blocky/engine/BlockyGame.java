@@ -104,5 +104,23 @@ public class BlockyGame {
     public Piece getActivePiece() { return activePiece; }
     // setDirection() function was missing processMovement(); causing the L and R key inputs to not register
     public void setDirection(Direction movement) { this.movement = movement; processMovement();} 
-    public void rotatePiece(boolean dir) { activePiece.rotate(dir); }
+    public void rotatePiece(boolean dir) {
+        // save curr position before rotation
+        Position oldPos = activePiece.getPosition();
+    
+        // perform rotation
+        activePiece.rotate(dir);
+    
+        // if new orientation collides, moving piece up by one row so it won't go out of bounds
+        if (board.collides(activePiece)) {
+            activePiece.moveTo(oldPos.add(1, 0));
+            
+            // if still colliding after the upward shift, revert both the move and the rotation
+            if (board.collides(activePiece)) {
+                activePiece.moveTo(oldPos);
+                // undo rotation by rotating in the opposite direction
+                activePiece.rotate(!dir);
+            }
+        }
+    }
 }
