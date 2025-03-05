@@ -82,7 +82,7 @@ public class Board {
         List completedRows = new LinkedList();
         for (int row = 0; row < Constants.BOARD_HEIGHT; row++) {
             if (isCompletedRow(row)) {
-                completedRows.add(well[row]); // it was completedRows.add(well[row]);         completedRows.add(row);
+                completedRows.add(row); // Fixed bug causing program to get stuck after a row is completed. it was completedRows.add(well[row]); before
             }
         }
         return completedRows;
