@@ -103,6 +103,6 @@ public class BlockyGame {
     
     public Piece getActivePiece() { return activePiece; }
     // it was missing processMovement(); causing the L and R key inputs to not register
-    public void setDirection(Direction movement) { this.movement = movement; } 
+    public void setDirection(Direction movement) { this.movement = movement; processMovement();} 
     public void rotatePiece(boolean dir) { activePiece.rotate(dir); }
 }
