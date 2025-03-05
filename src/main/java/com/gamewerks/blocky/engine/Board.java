@@ -14,7 +14,7 @@ public class Board {
     }
     
     public boolean isValidPosition(int row, int col) {
-        return row >= 0 && row <= well.length && col >= 0 && col < well[0].length; // it was row <= well.length before
+        return row >= 0 && row < well.length && col >= 0 && col < well[0].length; // it was row <= well.length before
     }
     
     public boolean collides(Piece p) {
